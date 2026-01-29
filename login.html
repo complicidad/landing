@@ -1705,15 +1705,54 @@ renderOrders: () => {
             },
 
             printLabels: () => {
-                const targets = state.selectedOrders.size > 0 ? state.allOrders.filter(x => state.selectedOrders.has(String(x.orderId || x.createdAt))) : state.visibleOrders;
+                const targets = state.selectedOrders.size > 0 
+                    ? state.allOrders.filter(x => state.selectedOrders.has(String(x.orderId || x.createdAt))) 
+                    : state.visibleOrders;
+
                 if(!targets.length) return app.showToast('Nada para imprimir');
-                app.doPrint(targets);
+
+                // UX: Preguntar al usuario el formato antes de proceder
+                app.openModal(`
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-4 text-primary mx-auto">
+                            <i data-lucide="printer" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Formato de Impresión</h3>
+                        <p class="text-slate-400 text-sm mb-6">¿Cómo deseas organizar las etiquetas en la hoja?</p>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <button onclick="app.doPrint(app.tempTargets, 1)" class="p-4 rounded-xl border border-white/10 hover:border-primary hover:bg-primary/5 transition group">
+                                <div class="flex flex-col items-center gap-2">
+                                    <div class="w-full h-12 bg-slate-800 rounded border-2 border-dashed border-slate-600 flex flex-col p-1 gap-1">
+                                        <div class="h-full w-full bg-slate-500 rounded-sm"></div>
+                                    </div>
+                                    <span class="text-xs font-bold text-white">1 Columna</span>
+                                </div>
+                            </button>
+
+                            <button onclick="app.doPrint(app.tempTargets, 2)" class="p-4 rounded-xl border border-white/10 hover:border-primary hover:bg-primary/5 transition group">
+                                <div class="flex flex-col items-center gap-2">
+                                    <div class="w-full h-12 bg-slate-800 rounded border-2 border-dashed border-slate-600 flex grid grid-cols-2 p-1 gap-1">
+                                        <div class="h-full bg-slate-500 rounded-sm"></div>
+                                        <div class="h-full bg-slate-500 rounded-sm"></div>
+                                    </div>
+                                    <span class="text-xs font-bold text-white">2 Columnas</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                `);
+
+                // Guardamos los targets temporalmente para que doPrint los use
+                app.tempTargets = targets;
+                if(window.lucide) lucide.createIcons();
             },
 
-            doPrint: (list) => {
+            doPrint: (list, cols = 2) => {
                 if(!list.length) return;
                 const area = document.getElementById('print-area');
                 const shopName = state.config.merchantName || "Mi Tienda";
+                const cardWidth = cols === 1 ? '98%' : '48%';
                 
                 // CORRECCIÓN: Usamos 'block' en el contenedor y 'inline-block' en las tarjetas.
                 // Esto evita que el navegador móvil parta las tarjetas entre páginas.
@@ -1722,7 +1761,7 @@ renderOrders: () => {
                         ${list.map(x => `
                             <div style="
                                 display: inline-block; 
-                                width: 48%; /* Un poco menos del 50% para margen */
+                                width: ${cardWidth};
                                 margin: 1%; 
                                 vertical-align: top; 
                                 border: 1px solid #000; 
