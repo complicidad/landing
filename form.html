@@ -395,6 +395,7 @@
             normalizeText: (text) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(),
 
             renderClient: () => {
+                document.getElementById('banner-store-name').innerText = storeName;
                 document.title = `Envío - ${state.config.merchantName}`;
                 document.getElementById('client-title').innerText = state.config.merchantName || "Agenda tu envío";
                 document.getElementById('client-title').classList.remove('hidden');
