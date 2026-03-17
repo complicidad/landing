@@ -4,8 +4,8 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Agenda tu envío | Registro de Datos</title>
-    <meta name="description" content="Completa tus datos de entrega en segundos y programa tu envío de forma segura.">
+    <title>Agenda tu envío | Datos de Entrega</title>
+    <meta name="description" content="Completa tus datos de entrega en segundos. 100% Seguro y Fácil.">
     <meta name="robots" content="noindex">
     <meta name="theme-color" content="#ffffff">
 
@@ -21,19 +21,19 @@
             theme: {
                 extend: {
                     colors: {
-                        brand_accent: '#3B82F6',   
-                        brand_text: '#1e293b',     
+                        brand_primary: '#3B82F6',   /* Azul Latam5S */
+                        brand_secondary: '#10B981', /* Verde Latam5S */
+                        brand_accent: '#D96B4F',   
                         danger: '#ef4444',
-                        whatsapp: '#25D366',       
                     },
                     fontFamily: { sans: ['Quicksand', 'sans-serif'] },
                     animation: {
-                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
                         'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
                     },
                     keyframes: {
-                        shake: { '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' }, '20%, 80%': { transform: 'translate3d(2px, 0, 0)' }, '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' }, '40%, 60%': { transform: 'translate3d(4px, 0, 0)' } },
-                        fadeIn: { from: { opacity: 0, transform: 'translateY(10px)' }, to: { opacity: 1, transform: 'translateY(0)' } }
+                        fadeIn: { from: { opacity: 0, transform: 'translateY(10px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+                        shake: { '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' }, '20%, 80%': { transform: 'translate3d(2px, 0, 0)' }, '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' }, '40%, 60%': { transform: 'translate3d(4px, 0, 0)' } }
                     }
                 }
             }
@@ -41,122 +41,132 @@
     </script>
 
     <style>
-        body { font-family: "Quicksand", sans-serif; background-color: #f8fafc; color: #1e293b; }
+        body { font-family: "Quicksand", sans-serif; background-color: #ffffff; color: #2b2b2b; }
         .input-transition { transition: all 0.2s ease-in-out; }
-        .progress-glow { box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+        .progress-glow { box-shadow: 0 0 8px rgba(59, 130, 246, 0.4); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="min-h-[100dvh] flex flex-col items-center">
+<body class="min-h-[100dvh] flex flex-col items-center selection:bg-brand_primary selection:text-white">
 
-    <div class="fixed top-0 left-0 w-full h-1.5 bg-gray-200 z-[60]">
-        <div id="progress-bar" class="h-full bg-brand_accent transition-all duration-500 progress-glow" style="width: 5%"></div>
+    <div class="fixed top-0 left-0 w-full h-1.5 bg-gray-100 z-[70]">
+        <div id="progress-bar" class="h-full bg-brand_primary transition-all duration-500 progress-glow" style="width: 5%"></div>
+    </div>
+
+    <div class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
+        <div class="max-w-xl mx-auto px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-brand_primary to-brand_secondary flex items-center justify-center font-bold text-white text-xs">5S</div>
+                <div class="flex flex-col">
+                    <span id="banner-store-name" class="text-sm font-bold text-gray-800 leading-tight">Cargando tienda...</span>
+                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Datos de Envío</span>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-2 py-1 rounded-md border border-gray-100">
+                <i data-lucide="lock" class="w-3 h-3 text-brand_secondary"></i>
+            </div>
+        </div>
     </div>
 
     <div id="loading-overlay" class="fixed inset-0 bg-white z-[9999] flex flex-col items-center justify-center transition-opacity duration-300">
-        <div class="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-brand_accent"></div>
-        <p class="mt-4 text-brand_accent font-bold text-xs uppercase tracking-widest animate-pulse">Cargando Tienda...</p>
+        <div class="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-brand_primary"></div>
+        <p class="mt-4 text-brand_primary font-bold text-xs uppercase tracking-widest animate-pulse">Iniciando Formulario...</p>
     </div>
 
-    <div id="toast" class="fixed top-5 right-5 z-[100] bg-slate-900 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 -translate-y-20 opacity-0 max-w-sm">
-        <span id="toast-msg" class="font-bold text-sm leading-tight">Notificación</span>
+    <div id="toast" class="fixed top-20 right-5 z-[100] bg-slate-900 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 -translate-y-20 opacity-0 max-w-sm">
+        <i data-lucide="check-circle" class="w-5 h-5 text-brand_secondary"></i>
+        <span id="toast-msg" class="font-bold text-sm leading-tight">Mensaje</span>
     </div>
 
-    <main class="w-full max-w-xl px-6 py-8 md:py-12 animate-fade-in flex flex-col flex-1">
+    <main class="w-full max-w-xl px-6 py-8 animate-fade-in flex flex-col flex-1">
         
-        <div class="text-center mb-8 pt-4">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-brand_accent text-[10px] font-bold uppercase tracking-widest mb-3 border border-blue-100">
-                <i data-lucide="truck" class="w-3 h-3"></i> Registro de Datos de Envío
-            </div>
-            <h1 id="client-title" class="text-3xl font-bold text-slate-800 tracking-tight">Agenda tu envío</h1> 
-            <p class="text-slate-500 text-sm mt-2">Completa el formulario para que podamos procesar tu entrega correctamente.</p>
-        </div>
-
         <div id="view-client" class="relative flex-1 flex flex-col">
-            <div class="mb-8 p-4 bg-amber-50 border border-amber-100 rounded-2xl flex gap-3 items-start shadow-sm">
-                <i data-lucide="info" class="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0"></i>
-                <div class="text-sm text-amber-900">
-                    <span class="font-bold block mb-0.5 text-amber-950">Hora límite de despacho: <span id="client-time">--:--</span></span>
-                    Los datos enviados después de esta hora se programan para el siguiente turno.
+            <div class="mb-8 p-4 bg-blue-50 border border-blue-100 rounded-2xl flex gap-3 items-start">
+                <i data-lucide="info" class="w-5 h-5 text-brand_primary mt-0.5 flex-shrink-0"></i>
+                <div class="text-sm text-blue-900">
+                    <span class="font-bold block mb-1">Registro Oficial de Envíos</span>
+                    Completa este formulario para que el equipo de <span id="info-store-name" class="font-bold underline">la tienda</span> pueda programar tu despacho.
                 </div>
             </div>
-        
+
             <form id="client-form" onsubmit="app.submitOrder(event)" class="space-y-8 flex-1">
+                
                 <div id="block-identity" class="relative z-30">
-                    <label class="block text-sm font-bold text-slate-700 mb-2 ml-1 uppercase tracking-wide text-[11px]">Paso 1: Tu WhatsApp <span class="text-danger">*</span></label>
+                     <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Tu WhatsApp <span class="text-danger">*</span></label>
                     <div class="relative">
-                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-lg">+51</span>
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-lg">+51</span>
                         <input id="c-phone" type="tel" maxlength="9" inputmode="numeric" placeholder="9XXXXXXXX" oninput="app.handleClientPhone(this)" required 
-                            class="w-full bg-white border border-slate-200 rounded-2xl py-4 pr-4 pl-14 text-slate-800 text-lg outline-none focus:border-brand_accent focus:ring-4 focus:ring-brand_accent/10 input-transition font-medium shadow-sm">
-                        <div id="user-found-badge" class="hidden absolute right-3 top-1/2 -translate-y-1/2 bg-green-50 text-green-600 text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                            <i data-lucide="sparkles" class="w-3 h-3"></i> ¡Bienvenido de nuevo!
+                            class="w-full bg-gray-50 border border-gray-200 rounded-2xl py-4 pr-4 pl-14 text-gray-800 text-lg outline-none focus:border-brand_primary focus:bg-white focus:ring-4 focus:ring-brand_primary/10 input-transition font-medium shadow-sm">
+                        <div id="user-found-badge" class="hidden absolute right-3 top-1/2 -translate-y-1/2 bg-green-100 text-green-700 text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                            <i data-lucide="sparkles" class="w-3 h-3"></i> Te conocemos
                         </div>
                     </div>
                 </div>
         
                 <div id="progressive-content" class="space-y-8">
                     <div id="block-service" class="hidden opacity-0 transition-all duration-500 transform translate-y-4">
-                        <label class="block text-sm font-bold text-slate-700 mb-2 ml-1 uppercase tracking-wide text-[11px]">Paso 2: Método de Entrega <span class="text-danger">*</span></label>
+                        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Método de Envío <span class="text-danger">*</span></label>
                         <div class="relative">
-                            <select id="c-courier-select" onchange="app.onCourierChange(this.value)" class="w-full appearance-none bg-white border border-slate-200 rounded-2xl py-4 pl-4 pr-10 text-slate-800 outline-none focus:border-brand_accent focus:ring-4 focus:ring-brand_accent/10 cursor-pointer input-transition font-medium shadow-sm">
-                                <option value="" disabled selected>Selecciona cómo recibirás tu pedido...</option>
+                            <select id="c-courier-select" onchange="app.onCourierChange(this.value)" class="w-full appearance-none bg-gray-50 border border-gray-200 rounded-2xl py-4 pl-4 pr-10 text-gray-800 outline-none focus:border-brand_primary focus:bg-white cursor-pointer input-transition font-medium shadow-sm">
+                                <option value="" disabled selected>Selecciona tu courier...</option>
                             </select>
-                            <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-400"><i data-lucide="chevron-down" class="w-5 h-5"></i></div>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400"><i data-lucide="chevron-down" class="w-5 h-5"></i></div>
                         </div>
                     </div>
         
                     <div id="dynamic-form-section" class="hidden space-y-6 transition-all duration-500">
-                        <div id="fields-agency" class="hidden space-y-6 animate-fade-in">
+                        <div id="fields-agency" class="hidden space-y-6">
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2 ml-1 uppercase tracking-wide text-[11px]">Sede de Agencia <span class="text-danger">*</span></label>
-                                <div class="relative group z-30">
-                                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400"></i>
-                                    <input id="c-agency" type="text" onfocus="app.revealStep('block-personal')" onblur="app.validateAgencyOnBlur(this)" class="w-full bg-white border border-slate-200 text-slate-800 rounded-2xl pl-12 pr-10 py-4 outline-none focus:border-brand_accent shadow-sm" placeholder="Escribe tu distrito o ciudad..." autocomplete="off" oninput="app.searchAgency(this.value)">
-                                    <button type="button" id="btn-clear-agency" onclick="app.clearAgency()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 p-1 hover:text-danger"><i data-lucide="x" class="h-5 w-5"></i></button>
-                                    <div id="agency-results" class="hidden absolute left-0 right-0 top-full mt-2 bg-white border border-slate-200 rounded-2xl shadow-xl max-h-60 overflow-y-auto z-50 divide-y divide-slate-100"></div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Busca tu Sede <span class="text-danger">*</span></label>
+                                <div class="relative z-30">
+                                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"></i>
+                                    <input id="c-agency" type="text" onfocus="app.revealStep('block-personal')" onblur="app.validateAgencyOnBlur(this)" class="w-full bg-gray-50 border border-gray-200 text-gray-800 rounded-2xl pl-12 pr-10 py-4 outline-none focus:border-brand_primary transition font-medium shadow-sm" placeholder="Escribe ciudad o agencia..." autocomplete="off" oninput="app.searchAgency(this.value)">
+                                    <button type="button" id="btn-clear-agency" onclick="app.clearAgency()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 p-1"><i data-lucide="x" class="h-5 w-5"></i></button>
+                                    <div id="agency-results" class="hidden absolute left-0 right-0 top-full mt-2 bg-white border border-gray-200 rounded-xl shadow-xl max-h-60 overflow-y-auto z-50 divide-y divide-gray-100"></div>
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2 ml-1 uppercase tracking-wide text-[11px]">DNI de quien recoge <span class="text-danger">*</span></label>
-                                <input id="c-dni" type="tel" maxlength="8" class="w-full bg-white border border-slate-200 text-slate-800 rounded-2xl p-4 outline-none focus:border-brand_accent shadow-sm" placeholder="8 dígitos">
+                                 <label class="block text-sm font-bold text-gray-700 mb-2">DNI para recojo <span class="text-danger">*</span></label>
+                                <input id="c-dni" type="tel" maxlength="15" class="w-full bg-gray-50 border border-gray-200 text-gray-800 rounded-2xl p-4 outline-none focus:border-brand_primary transition font-medium shadow-sm" placeholder="Número de Documento">
                             </div>
                         </div>
 
-                        <div id="fields-home" class="hidden space-y-6 animate-fade-in">
+                        <div id="fields-home" class="hidden space-y-6">
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2 ml-1 uppercase tracking-wide text-[11px]">Distrito <span class="text-danger">*</span></label>
-                                <div class="relative group z-30">
-                                    <i data-lucide="map-pin" class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400"></i>
-                                    <input id="c-district" type="text" onfocus="app.revealStep('block-personal')" onblur="app.validateDistrictOnBlur(this)" class="w-full bg-white border border-slate-200 text-slate-800 rounded-2xl pl-12 pr-10 py-4 outline-none focus:border-brand_accent shadow-sm" placeholder="Selecciona tu distrito..." autocomplete="off" oninput="app.searchDistrict(this.value)">
-                                    <button type="button" id="btn-clear-district" onclick="app.clearDistrict()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 p-1 hover:text-danger"><i data-lucide="x" class="h-5 w-5"></i></button>
-                                    <div id="district-results" class="hidden absolute left-0 right-0 top-full mt-2 bg-white border border-slate-200 rounded-2xl shadow-xl max-h-60 overflow-y-auto z-50 divide-y divide-slate-100"></div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Distrito <span class="text-danger">*</span></label>
+                                <div class="relative z-30">
+                                    <i data-lucide="map-pin" class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"></i>
+                                    <input id="c-district" type="text" onfocus="app.revealStep('block-personal')" onblur="app.validateDistrictOnBlur(this)" class="w-full bg-gray-50 border border-gray-200 text-gray-800 rounded-2xl pl-12 pr-10 py-4 outline-none focus:border-brand_primary transition font-medium shadow-sm" placeholder="Selecciona tu distrito..." autocomplete="off" oninput="app.searchDistrict(this.value)">
+                                    <button type="button" id="btn-clear-district" onclick="app.clearDistrict()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 p-1"><i data-lucide="x" class="h-5 w-5"></i></button>
+                                    <div id="district-results" class="hidden absolute left-0 right-0 top-full mt-2 bg-white border border-gray-200 rounded-xl shadow-xl max-h-60 overflow-y-auto z-50 divide-y divide-gray-100"></div>
                                 </div>
                             </div>
                             <div>
-                                 <label class="block text-sm font-bold text-slate-700 mb-2 ml-1 uppercase tracking-wide text-[11px]">Dirección y Referencia <span class="text-danger">*</span></label>
-                                 <input id="c-address" class="w-full bg-white border border-slate-200 rounded-t-2xl p-4 outline-none focus:border-brand_accent shadow-sm" placeholder="Calle, Av, Número...">
-                                 <input id="c-ref" class="w-full bg-slate-50 border-x border-b border-slate-200 rounded-b-2xl p-4 outline-none focus:border-brand_accent shadow-sm text-sm" placeholder="Piso, color de casa, etc...">
+                                 <label class="block text-sm font-bold text-gray-700 mb-2">Dirección y Referencia <span class="text-danger">*</span></label>
+                                <input id="c-address" class="w-full bg-gray-50 border border-gray-200 rounded-t-2xl p-4 outline-none focus:border-brand_primary transition font-medium" placeholder="Calle, Av, Número...">
+                                <input id="c-ref" class="w-full bg-white border-x border-b border-gray-200 rounded-b-2xl p-4 outline-none focus:border-brand_primary transition text-sm text-gray-500" placeholder="Ej: Casa frente al parque, portón azul...">
                             </div>
                         </div>
                     </div>
         
                     <div id="block-personal" class="hidden opacity-0 transition-all duration-500 transform translate-y-4">
-                         <label class="block text-sm font-bold text-slate-700 mb-2 ml-1 uppercase tracking-wide text-[11px]">Nombre Completo <span class="text-danger">*</span></label>
-                         <input id="c-name" oninput="app.revealStep('block-closing')" required class="w-full bg-white border border-slate-200 text-slate-800 rounded-2xl p-4 outline-none focus:border-brand_accent shadow-sm capitalize" placeholder="¿A quién dirigimos el paquete?">
+                         <label class="block text-sm font-bold text-gray-700 mb-2">Nombre Completo <span class="text-danger">*</span></label>
+                         <input id="c-name" oninput="app.revealStep('block-closing')" required class="w-full bg-gray-50 border border-gray-200 text-gray-800 rounded-2xl p-4 outline-none focus:border-brand_primary transition capitalize font-medium shadow-sm" placeholder="¿Quién recibe el paquete?">
                     </div>
         
                     <div id="block-closing" class="hidden opacity-0 transition-all duration-500 transform translate-y-4 space-y-8">
                          <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2 ml-1 uppercase tracking-wide text-[11px]">¿Cuándo prefieres el envío? <span class="text-danger">*</span></label>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Fecha de Entrega <span class="text-danger">*</span></label>
                             <div class="relative">
-                                <select id="c-date-select" class="w-full appearance-none bg-white border border-slate-200 rounded-2xl py-4 pl-4 pr-10 text-slate-800 outline-none focus:border-brand_accent cursor-pointer shadow-sm">
-                                    <option value="" disabled selected>Elige una fecha disponible...</option>
+                                <select id="c-date-select" class="w-full appearance-none bg-gray-50 border border-gray-200 rounded-2xl py-4 pl-4 pr-10 text-gray-800 outline-none focus:border-brand_primary cursor-pointer shadow-sm">
+                                    <option value="" disabled selected>Elige una fecha...</option>
                                 </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-400"><i data-lucide="calendar" class="w-5 h-5"></i></div>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400"><i data-lucide="calendar" class="w-5 h-5"></i></div>
                             </div>
                         </div>
                         
-                        <button type="submit" id="btn-submit-order" class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-5 rounded-2xl shadow-xl transition-all flex justify-center items-center gap-3 text-lg">
-                            <i class="fab fa-whatsapp text-2xl"></i> Enviar Datos por WhatsApp
+                        <button type="submit" id="btn-submit-order" class="w-full bg-brand_primary hover:bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-xl transition-all flex justify-center items-center gap-3 text-lg">
+                            <i class="fab fa-whatsapp text-2xl"></i> Finalizar Registro
                         </button>
                     </div>
                 </div>
@@ -164,15 +174,15 @@
         </div>
 
         <div id="success-view" class="hidden flex flex-col items-center justify-center py-10 text-center animate-fade-in flex-1">
-            <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mb-6"><i data-lucide="check" class="w-10 h-10"></i></div>
-            <h2 class="text-2xl font-bold text-slate-800 mb-2">¡Datos Recibidos!</h2>
-            <p class="text-slate-500 text-sm mb-8 leading-relaxed">Se está abriendo tu chat de WhatsApp. Por favor, <b>pulsa enviar</b> en el chat para confirmar tu programación.</p>
-            <button onclick="window.location.reload()" class="px-6 py-3 bg-slate-100 text-slate-600 font-bold rounded-xl hover:bg-slate-200 transition">Registrar otro envío</button>
+            <div class="w-20 h-20 bg-green-50 text-brand_secondary rounded-full flex items-center justify-center mb-6 border border-green-100 shadow-sm"><i data-lucide="check-circle" class="w-10 h-10"></i></div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">¡Todo Listo!</h2>
+            <p class="text-gray-500 text-sm mb-8 leading-relaxed">Tus datos han sido registrados. Por favor, <b>pulsa enviar</b> en el chat de WhatsApp que se abrirá a continuación para confirmar con el vendedor.</p>
+            <button onclick="window.location.reload()" class="px-6 py-3 bg-gray-50 border border-gray-200 text-gray-600 font-bold rounded-xl hover:bg-white transition-all shadow-sm">Registrar otro envío</button>
         </div>
     </main>
 
-    <footer class="py-6 text-center border-t border-slate-100 w-full bg-white">
-        <p class="text-[10px] uppercase font-bold text-slate-400 tracking-[0.2em]">Logística gestionada por Latam5S</p>
+    <footer class="w-full bg-white border-t border-gray-100 py-6 text-center">
+        <p class="text-[10px] uppercase font-bold text-gray-400 tracking-[0.2em]">Formulario Logístico • Powered by Latam5S</p>
     </footer>
 
     <script>
@@ -187,7 +197,7 @@
         const MONTH_NAMES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
         const DAY_INDEX_MAP = { "Dom": 0, "Lun": 1, "Mar": 2, "Mié": 3, "Jue": 4, "Vie": 5, "Sáb": 6 };
 
-        const state = { merchantId: null, config: {}, selectedCourierType: null, selectedCourier: null, externalData: { districts: [], agencies: [] } };
+        const state = { merchantId: null, config: {}, selectedCourier: null, externalData: { districts: [], agencies: [] } };
 
         const app = {
             init: async () => {
@@ -197,7 +207,7 @@
                 try {
                     const res = await fetch(`${API_URL}?action=getConfig&merchantId=${state.merchantId}`);
                     const json = await res.json();
-                    if(json.data && json.data.merchantName) {
+                    if(json.data) {
                         state.config = json.data;
                         app.renderClient();
                         document.getElementById('loading-overlay').classList.add('hidden');
@@ -207,30 +217,30 @@
 
             showError: () => {
                 document.getElementById('loading-overlay').classList.add('hidden');
-                document.getElementById('view-client').classList.add('hidden');
                 document.getElementById('error-view').classList.remove('hidden');
-                lucide.createIcons();
             },
 
             renderClient: () => {
-                document.getElementById('client-title').innerText = state.config.merchantName;
-                document.getElementById('client-time').innerText = state.config.updateTime || "18:00";
+                const name = state.config.merchantName || "Tienda";
+                document.getElementById('banner-store-name').innerText = name;
+                document.getElementById('info-store-name').innerText = name;
                 
                 const cl = state.config.couriers || []; 
                 const cs = document.getElementById('c-courier-select'); 
-                cs.innerHTML = '<option value="" disabled selected>Selecciona una opción...</option>';
+                cs.innerHTML = '<option value="" disabled selected>Elige cómo recibirás tu pedido...</option>';
                 
-                let homeOptionAdded = false;
+                let homeAdded = false;
                 cl.forEach(c => {
                     const type = COURIER_TYPES[c] || "home";
-                    const opt = document.createElement('option');
                     if (type === 'agency') {
-                        opt.value = c; opt.innerText = `Retiro en Agencia ${c}`;
+                        const opt = document.createElement('option');
+                        opt.value = c; opt.innerText = "Retiro en Agencia " + c;
                         cs.appendChild(opt);
-                    } else if (!homeOptionAdded) {
+                    } else if (!homeAdded) {
+                        const opt = document.createElement('option');
                         opt.value = "GENERIC_HOME"; opt.innerText = "Envío a Domicilio / Trabajo";
                         cs.appendChild(opt);
-                        homeOptionAdded = true;
+                        homeAdded = true;
                         state.primaryHomeCourier = c;
                     }
                 });
@@ -245,9 +255,8 @@
                     el.classList.remove('hidden');
                     setTimeout(() => el.classList.remove('opacity-0', 'translate-y-4'), 50);
                     
-                    const progressMap = { 'block-service': 25, 'dynamic-form-section': 50, 'block-personal': 75, 'block-closing': 100 };
+                    const progressMap = { 'block-service': 30, 'dynamic-form-section': 60, 'block-personal': 85, 'block-closing': 100 };
                     if(progressMap[id]) document.getElementById('progress-bar').style.width = progressMap[id] + '%';
-                    
                     if (id === 'block-service' || id === 'block-closing') el.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             },
@@ -261,21 +270,20 @@
                     if (cache[val]) {
                         document.getElementById('user-found-badge').classList.remove('hidden');
                         document.getElementById('c-name').value = cache[val].name || "";
-                        app.showToast('¡Datos recuperados automáticamente! ✨');
+                        app.showToast('¡Hola de nuevo! Recuperamos tus datos ✨');
                     }
                     app.revealStep('block-service');
                 }
             },
 
             onCourierChange: (val) => { 
-                let realCourier = val === "GENERIC_HOME" ? state.primaryHomeCourier : val;
-                state.selectedCourier = realCourier;
-                state.selectedCourierType = COURIER_TYPES[realCourier] || "home"; 
+                state.selectedCourier = val === "GENERIC_HOME" ? state.primaryHomeCourier : val;
+                const type = COURIER_TYPES[state.selectedCourier] || "home";
                 document.getElementById('dynamic-form-section').classList.remove('hidden'); 
                 const af = document.getElementById('fields-agency'), hf = document.getElementById('fields-home'); 
-                if (state.selectedCourierType === 'agency') { 
+                if (type === 'agency') { 
                     af.classList.remove('hidden'); hf.classList.add('hidden'); 
-                    app.loadAgencies(realCourier); 
+                    app.loadAgencies(state.selectedCourier); 
                 } else { 
                     af.classList.add('hidden'); hf.classList.remove('hidden'); 
                 } 
@@ -301,7 +309,7 @@
                 const results = document.getElementById('agency-results');
                 if (q.length < 2) { results.classList.add('hidden'); return; }
                 const filtered = state.externalData.agencies.filter(a => (a.Agencia + a.Direccion).toLowerCase().includes(q.toLowerCase())).slice(0, 5);
-                results.innerHTML = filtered.map(a => `<div onmousedown="app.selectAgency('${a.Agencia}','${a.Direccion}')" class="p-3 hover:bg-slate-50 cursor-pointer"><p class="font-bold text-sm">${a.Agencia}</p><p class="text-[10px] text-slate-500">${a.Direccion}</p></div>`).join('');
+                results.innerHTML = filtered.map(a => `<div onmousedown="app.selectAgency('${a.Agencia}','${a.Direccion}')" class="p-3 hover:bg-blue-50 cursor-pointer border-b last:border-0"><p class="font-bold text-sm text-gray-800">${a.Agencia}</p><p class="text-[10px] text-gray-400">${a.Direccion}</p></div>`).join('');
                 results.classList.remove('hidden');
             },
 
@@ -315,9 +323,9 @@
 
             searchDistrict: (q) => {
                 const results = document.getElementById('district-results');
-                if (q.length < 2) { results.classList.add('hidden'); return; }
+                if (q.length < 1) { results.classList.add('hidden'); return; }
                 const filtered = state.externalData.districts.filter(d => d.toLowerCase().includes(q.toLowerCase())).slice(0, 5);
-                results.innerHTML = filtered.map(d => `<div onmousedown="app.selectDistrict('${d}')" class="p-3 hover:bg-slate-50 cursor-pointer text-sm font-medium">${d}</div>`).join('');
+                results.innerHTML = filtered.map(d => `<div onmousedown="app.selectDistrict('${d}')" class="p-3 hover:bg-blue-50 cursor-pointer text-sm font-medium text-gray-700">${d}</div>`).join('');
                 results.classList.remove('hidden');
             },
 
@@ -331,14 +339,14 @@
 
             generateDateOptions: () => { 
                 const s = document.getElementById('c-date-select'); 
-                const allowedDays = state.config.shippingDays || [];
+                const allowed = state.config.shippingDays || [];
                 const now = new Date();
                 const gap = parseInt(state.config.updateGap || 0);
-                for(let i = gap; i < (gap + 10); i++) { 
-                    const f = new Date(now); f.setDate(now.getDate() + i); 
-                    if(allowedDays.includes(Object.keys(DAY_INDEX_MAP).find(key => DAY_INDEX_MAP[key] === f.getDay()))) {
-                        const lbl = `${DAY_NAMES_FULL[f.getDay()]} ${f.getDate()} ${MONTH_NAMES[f.getMonth()]}`; 
-                        const val = `${f.getDate().toString().padStart(2,'0')}/${(f.getMonth()+1).toString().padStart(2,'0')}`;
+                for(let i = gap; i < (gap + 14); i++) { 
+                    const d = new Date(now); d.setDate(now.getDate() + i); 
+                    if(allowed.includes(Object.keys(DAY_INDEX_MAP).find(k => DAY_INDEX_MAP[k] === d.getDay()))) {
+                        const lbl = `${DAY_NAMES_FULL[d.getDay()]} ${d.getDate()} ${MONTH_NAMES[d.getMonth()]}`; 
+                        const val = `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}`;
                         const o = document.createElement('option'); o.value = val; o.innerText = lbl; s.appendChild(o);
                     }
                 } 
@@ -347,7 +355,8 @@
             submitOrder: async (e) => { 
                 e.preventDefault(); 
                 const btn = document.getElementById('btn-submit-order');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registrando...';
                 
                 const data = {
                     clientName: document.getElementById('c-name').value,
@@ -361,8 +370,8 @@
                     clientRef: document.getElementById('c-ref')?.value || ""
                 };
 
-                let waMsg = `*📦 DATOS DE ENVÍO*\n\n👤 *Nombre:* ${data.clientName}\n📱 *Celular:* ${data.clientPhone}\n🚚 *Courier:* ${data.courier}\n📅 *Fecha:* ${data.shippingDate}\n`;
-                if(state.selectedCourierType === 'agency') waMsg += `🏢 *Agencia:* ${data.clientAgency}\n🆔 *DNI:* ${data.clientDni}`;
+                let waMsg = `*📦 REGISTRO DE ENVÍO*\n\n👤 *Cliente:* ${data.clientName}\n📱 *Celular:* ${data.clientPhone}\n🚚 *Courier:* ${data.courier}\n📅 *Fecha:* ${data.shippingDate}\n`;
+                if(data.clientAgency) waMsg += `🏢 *Agencia:* ${data.clientAgency}\n🆔 *DNI:* ${data.clientDni}`;
                 else waMsg += `📍 *Distrito:* ${data.clientDistrict}\n🏠 *Dirección:* ${data.clientAddress}\n🗺️ *Ref:* ${data.clientRef}`;
 
                 localStorage.setItem('latam5s_client_cache', JSON.stringify({[data.clientPhone]: {name: data.clientName}}));
@@ -372,7 +381,11 @@
                     window.open(`https://wa.me/51${state.config.whatsapp}?text=${encodeURIComponent(waMsg)}`, '_blank');
                     document.getElementById('view-client').classList.add('hidden');
                     document.getElementById('success-view').classList.remove('hidden');
-                } catch(e) { app.showToast("Error al guardar, intenta de nuevo."); }
+                } catch(e) { 
+                    app.showToast("Error de red. Pulsa nuevamente."); 
+                    btn.disabled = false;
+                    btn.innerText = "Finalizar Registro";
+                }
             },
 
             showToast: (msg) => {
