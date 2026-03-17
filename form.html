@@ -396,7 +396,6 @@
 
             renderClient: () => {
                 document.title = `Envío - ${state.config.merchantName}`;
-                document.getElementById('banner-store-name').innerText = storeName;
                 document.getElementById('client-title').innerText = state.config.merchantName || "Agenda tu envío";
                 document.getElementById('client-title').classList.remove('hidden');
                 document.getElementById('client-time').innerText = state.config.updateTime || "--:--";
