@@ -394,14 +394,9 @@
             normalizeText: (text) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(),
 
             renderClient: () => {
-                const storeName = state.config.merchantName || "Agenda tu envío";
-                document.title = `Envío - ${storeName}`;
-                document.getElementById('client-title').innerText = storeName;
+                document.title = `Envío - ${state.config.merchantName}`;
+                document.getElementById('client-title').innerText = state.config.merchantName || "Agenda tu envío";
                 document.getElementById('client-title').classList.remove('hidden');
-                
-                // Actualizamos el nombre en el Banner Superior
-                document.getElementById('banner-store-name').innerText = storeName;
-
                 document.getElementById('client-time').innerText = state.config.updateTime || "--:--";
 
                 const cl = state.config.couriers || [];
@@ -630,6 +625,7 @@
                 const cleanQ = app.normalizeText(q);
                 const m = (state.externalData.districts || []).filter(d => app.normalizeText(d).includes(cleanQ)).slice(0, 50);
 
+                // CAMBIO AQUÍ: Usamos onmousedown en lugar de onclick
                 c.innerHTML = m.length ? m.map(d => `
                     <div onmousedown="app.selectDistrict('${d.replace(/'/g, "\\'")}')" 
                          class="p-3 cursor-pointer hover:bg-gray-50 border-b border-gray-100 last:border-0">
@@ -690,7 +686,7 @@
                     const validDistricts = state.externalData.districts || [];
                     if (!validDistricts.includes(inputDist.value.trim())) { inputDist.focus(); inputDist.classList.add('animate-shake', 'border-red-500', 'bg-red-50'); setTimeout(() => inputDist.classList.remove('animate-shake', 'border-red-500', 'bg-red-50'), 1000); return app.showToast("⚠️ Selecciona un distrito de la lista"); }
                     const inputRef = document.getElementById('c-ref');
-                    if (inputRef.value.trim().length < 3) {
+                    if (inputRef.value.trim().length < 3) { // Mínimo 3 letras
                         inputRef.focus();
                         inputRef.classList.add('animate-shake', 'border-red-500', 'bg-red-50');
                         setTimeout(() => inputRef.classList.remove('animate-shake', 'border-red-500', 'bg-red-50'), 1000);
