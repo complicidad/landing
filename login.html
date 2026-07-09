@@ -1190,6 +1190,9 @@
                 // --- 1. SHALOM (.xlsx) ---
                 if (type === 'shalom') {
                     const shalomList = list.filter(x => x.courier.match(/shalom/i));
+                    const mercaderiasMaestras = [
+                        "SOBRE", "PAQUETE XXS", "PAQUETE XS", "PAQUETE S", "PAQUETE M", "PAQUETE L"
+                    ];
                     
                     dataToExport = shalomList.map(x => {
                         let destino = "";
@@ -1218,7 +1221,7 @@
                             "NRO GRR": "", 
                             "ORIGEN": "", 
                             "DESTINO": destino, 
-                            "MERCADERIA": "PAQUETE XXS",
+                            "MERCADERIA": mercaderiasMaestras,
                             "ALTO": "0", "ANCHO": "0", "LARGO": "0", "PESO": "0", "CANTIDAD": "1"
                         };
                     });
