@@ -436,6 +436,10 @@
     "Direccion": "Av. Pachacutec 429 - Wanchaq, Ref. A 100 Mtrs. De La Piscina Wanchaq"
   },
   {
+    "Agencia": "Cusco / Cusco / Wanchaq / Av. Huayruropata",
+    "Direccion": "Av. Tomasa Tito Condemayta N1706, Ref. Al Costado Del Terminal De Sicuani de Buses rápidos Por La Via Del Ipd"
+  },
+  {
     "Agencia": "Cusco / Cusco / Wanchaq / Cusco Parque Industrial",
     "Direccion": "Av. Las Americas Mz. E Lt. 20, 2da Etapa, Urb. Parque Industrial, Wanchaq - Cusco, Ref. Al Frente De Talleres Pfuro, Al Frente De Mederera Urpi, Paralela a La Av Via Expresa."
   },
@@ -713,7 +717,7 @@
   },
   {
     "Agencia": "La Libertad / Pacasmayo / Pacasmayo / Pacasmayo Las Palmeras",
-    "Direccion": "Ctra. Panamericana Norte N° Mz. P Lt. 4a - A.h. Las Palmeras, Referencia: Entre Av. Sucre Y Av. Leoncio Prado"
+    "Direccion": "Av. Panamericana Mz. 023 Lt. 003 Sector La Palmera, Ref. Paradero Del Muro Azul, Panamericana Norte Con Cruce Con Av. Huánuco, Sector Las Palmera"
   },
   {
     "Agencia": "La Libertad / Pacasmayo / San Pedro De Lloc / San Pedro De Lloc",
@@ -754,6 +758,10 @@
   {
     "Agencia": "La Libertad / Trujillo / La Esperanza / Av Tahuantinsuyo",
     "Direccion": "Av. Tahuantinsuyo N° 739, la Esperanza – trujillo – la Libertad, Ref. Diagonal A Grifo El Amigo. / Entre Pasaje Santa Ana Y Av. Los Laureles"
+  },
+  {
+    "Agencia": "La Libertad / Trujillo / La Esperanza / Urb Manuel Arevalo",
+    "Direccion": "Mz. B21 Lt. 05 Urb Manuel Arevalo Iii Etapa B, Ref. Cruce Con Av. Cahuide A Una Cdra. Del Complejo Deportivo Paz Y Amistad"
   },
   {
     "Agencia": "La Libertad / Trujillo / La Esperanza / Wichanzao",
